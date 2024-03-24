@@ -6,13 +6,11 @@ const typeDefs = gql`
     name: String!
     price: Float
     quantity: Int
-    image: String
   }
   input ProductInput {
     name: String!
     price: Float
     quantity: Int
-    image: String
   }
   type Query {
     getAllProducts: [Product]

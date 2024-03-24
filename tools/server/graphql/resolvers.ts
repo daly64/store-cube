@@ -24,11 +24,9 @@ const deleteProduct = (parent: any, data: { id: string }) => {
   const deletedProduct = prismaDeleteProduct(data.id);
   return deletedProduct !== null;
 };
-let currentNumberVar = 0;
-const currentNumber = () => currentNumberVar;
 
 const resolvers = {
-  Query: { getAllProducts, getProduct, currentNumber },
+  Query: { getAllProducts, getProduct },
   Mutation: { createProduct, updateProduct, deleteProduct },
 };
 export default resolvers;

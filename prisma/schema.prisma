@@ -19,5 +19,4 @@ model Product {
   name     String
   price    Float
   quantity Int    @default(0)
-  image    String
 }
