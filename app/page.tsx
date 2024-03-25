@@ -1,5 +1,11 @@
 "use client";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { Button } from "primereact/button";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { Toolbar } from "primereact/toolbar";
+import { TreeTable } from "primereact/treetable";
+
 const getAllProducts = gql`
   query {
     getAllProducts {
@@ -102,8 +108,16 @@ export default function Home() {
   if (productsError) return <p>Error : {productsError?.message}</p>;
   return (
     <main>
+      <Toolbar
+        start={
+          <>
+            <img src="favicon.ico" alt="icon" className="size-12 mr-3" />
+            <h1>Store Cube</h1>
+          </>
+        }
+      />
+
       <form onSubmit={onSubmit}>
-        <h1>Store Cube</h1>
         <label htmlFor="name">Name :</label>
         <input
           type="text"
@@ -115,27 +129,14 @@ export default function Home() {
 
         <label htmlFor="quantity">quantity :</label>
         <input type="number" id="quantity" name="quantity" defaultValue={0} />
-
-        <button type="submit">Save</button>
+        <Button label="Save" type="submit" />
       </form>
 
       {products?.getAllProducts.map((product: any) => (
-        <div
-          key={product.id}
-          style={{ display: "inline-list-item", margin: "10px" }}
-        >
-          <div
-            style={{
-              border: "1px solid black",
-              padding: "10px",
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
+        <div key={product.id}>
+          <div>
             {/* <p> {product.id} -</p> */}
-            <h3> {product.name}</h3>
+            <h3>{product.name}</h3>
             <p> : {product.quantity}</p>
             <button
               onClick={() =>
@@ -149,10 +150,24 @@ export default function Home() {
             >
               +1
             </button>
-            <button onClick={() => onDelete(product.id!)}>Delete</button>
+            <button
+
+              onClick={() => onDelete(product.id!)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
+
+      <DataTable
+        value={products?.getAllProducts}
+        selectionMode="single"
+        tableStyle={{ minWidth: "25rem" }}
+      >
+        <Column field="name" header="name"></Column>
+        <Column field="price" header="price"></Column>
+      </DataTable>
     </main>
   );
 }

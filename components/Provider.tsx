@@ -1,12 +1,8 @@
 "use client";
 import React from "react";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-  DefaultOptions,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+import { PrimeReactProvider } from "primereact/api";
 const Provider = ({
   children,
 }: Readonly<{
@@ -20,7 +16,13 @@ const Provider = ({
     cache: new InMemoryCache(),
   });
 
-  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+  return (
+    <ApolloProvider client={client}>
+      <PrimeReactProvider value={{ unstyled: false }}>
+        {children}
+      </PrimeReactProvider>
+    </ApolloProvider>
+  );
 };
 
 export default Provider;
