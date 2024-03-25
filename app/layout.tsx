@@ -4,7 +4,7 @@ import "./globals.css";
 import Provider from "@/components/Provider";
 
 import "primereact/resources/themes/lara-light-blue/theme.css";
-import "primeicons/primeicons.css";
+import "/node_modules/primeicons/primeicons.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
