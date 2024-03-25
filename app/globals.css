@@ -1,9 +1,6 @@
-@import "primeicons/primeicons.css";
-@import "primereact/resources/themes/lara-light-blue/theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer tailwind-base, primereact, tailwind-utilities;
 
