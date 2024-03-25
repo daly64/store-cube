@@ -3,8 +3,10 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { InputNumber } from "primereact/inputnumber";
+import { InputText } from "primereact/inputtext";
 import { Toolbar } from "primereact/toolbar";
-import { TreeTable } from "primereact/treetable";
+import { Fragment } from "react";
 
 const getAllProducts = gql`
   query {
@@ -106,67 +108,60 @@ export default function Home() {
   if (productsLoading) return <p>Loading...</p>;
 
   if (productsError) return <p>Error : {productsError?.message}</p>;
+
+  const actionBodyTemplate = (
+    <div className="flex flex-row justify-evenly">
+      <Button size="small" icon="pi pi-plus" />
+      <Button size="small" icon="pi pi-trash" />
+    </div>
+  );
+
   return (
     <main>
       <Toolbar
+        className="h-16  flex justify-between items-center bg-gray-100 text-blue-600 border-b-2 border-gray-300"
         start={
-          <>
-            <img src="favicon.ico" alt="icon" className="size-12 mr-3" />
-            <h1>Store Cube</h1>
-          </>
+          <div className="flex items-center">
+            <img src="favicon.ico" alt="icon" className="h-8 w-8 mr-2" />
+            <h2 className="text-xl font-semibold">Store Cube</h2>
+          </div>
         }
       />
 
-      <form onSubmit={onSubmit}>
-        <label htmlFor="name">Name :</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Product's name"
-        />
-
-        <label htmlFor="quantity">quantity :</label>
-        <input type="number" id="quantity" name="quantity" defaultValue={0} />
-        <Button label="Save" type="submit" />
-      </form>
-
-      {products?.getAllProducts.map((product: any) => (
-        <div key={product.id}>
-          <div>
-            {/* <p> {product.id} -</p> */}
-            <h3>{product.name}</h3>
-            <p> : {product.quantity}</p>
-            <button
-              onClick={() =>
-                onAddToStock(product.id!, {
-                  id: product.id,
-                  name: product.name,
-                  quantity: product.quantity,
-                  price: 100,
-                })
-              }
-            >
-              +1
-            </button>
-            <button
-
-              onClick={() => onDelete(product.id!)}
-            >
-              Delete
-            </button>
+      <div className="flex flex-col gap-4">
+        <h2 className="mt-4 ml-6 text-2xl">Add new product</h2>
+        <form onSubmit={onSubmit} className="flex flex-col gap-2">
+          <div className="m-auto flex flex-row gap-6">
+            <div className=" flex flex-row gap-2 ">
+              <InputText
+                id="name"
+                name="name"
+                required
+                placeholder="Product's name"
+              />
+              <InputNumber
+                id="quantity"
+                name="quantity"
+                placeholder="Quantity"
+                defaultValue={0}
+              />
+            </div>
+            <Button size="small" label="Save" type="submit" />
           </div>
-        </div>
-      ))}
+        </form>
+      </div>
 
       <DataTable
+        className="w-full my-10"
         value={products?.getAllProducts}
+        size="small"
         selectionMode="single"
         tableStyle={{ minWidth: "25rem" }}
       >
-        <Column field="name" header="name"></Column>
-        <Column field="price" header="price"></Column>
+        <Column field="name" header="name" />
+        <Column field="price" header="price" />
+        <Column field="quantity" header="quantity" />
+        <Column header="actions" body={actionBodyTemplate} />
       </DataTable>
     </main>
   );

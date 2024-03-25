@@ -32,6 +32,9 @@ dependencies:
   postcss:
     specifier: ^8.4.38
     version: 8.4.38
+  primeicons:
+    specifier: ^6.0.1
+    version: 6.0.1
   primereact:
     specifier: ^10.5.3
     version: 10.5.3(@types/react@18.2.69)(react-dom@18.2.0)(react@18.2.0)
@@ -1736,6 +1739,10 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.2.0
+    dev: false
+
+  /primeicons@6.0.1:
+    resolution: {integrity: sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==}
     dev: false
 
   /primereact@10.5.3(@types/react@18.2.69)(react-dom@18.2.0)(react@18.2.0):
