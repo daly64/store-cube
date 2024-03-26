@@ -118,17 +118,7 @@ export default function Home() {
 
   return (
     <main>
-      <Toolbar
-        className="h-16  flex justify-between items-center bg-gray-100 text-blue-600 border-b-2 border-gray-300"
-        start={
-          <div className="flex items-center">
-            <img src="favicon.ico" alt="icon" className="h-8 w-8 mr-2" />
-            <h2 className="text-xl font-semibold">Store Cube</h2>
-          </div>
-        }
-      />
-
-      <div className="flex flex-col gap-4">
+      <div className="sm:flex sm:flex-col sm:gap-4 md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20 flex-wrap justify-center content-center">
         <h2 className="mt-4 ml-6 text-2xl">Add new product</h2>
         <form onSubmit={onSubmit} className="flex flex-col gap-2">
           <div className="m-auto flex flex-row gap-6">
@@ -152,7 +142,7 @@ export default function Home() {
       </div>
 
       <DataTable
-        className="w-full my-10"
+        className=" mt-10 mx-auto flex flex-col gap-4 md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20"
         value={products?.getAllProducts}
         size="small"
         selectionMode="single"

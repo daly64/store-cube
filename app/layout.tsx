@@ -5,6 +5,7 @@ import Provider from "@/components/Provider";
 
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primeicons/primeicons.css";
+import ToolBar from "@/components/ToolBar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
       </head>
 
       <body className={inter.className}>
+      <ToolBar/>
         <Provider>{children}</Provider>
       </body>
     </html>
