@@ -118,35 +118,29 @@ export default function Home() {
 
   return (
     <main>
-      <div className="sm:flex sm:flex-col sm:gap-4 md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20 flex-wrap justify-center content-center">
-        <h2 className="mt-4 ml-6 text-2xl">Add new product</h2>
+      <div className="flex flex-col gap-4 items-center justify-center">
+        <h2 className="text-2xl">Add new product</h2>
         <form onSubmit={onSubmit} className="flex flex-col gap-2">
-          <div className="m-auto flex flex-row gap-6">
-            <div className=" flex flex-row gap-2 ">
-              <InputText
-                id="name"
-                name="name"
-                required
-                placeholder="Product's name"
-              />
-              <InputNumber
-                id="quantity"
-                name="quantity"
-                placeholder="Quantity"
-                defaultValue={0}
-              />
-            </div>
-            <Button size="small" label="Save" type="submit" />
+          <div className="flex gap-2">
+            <InputText
+              id="name"
+              name="name"
+              required
+              placeholder="Product's name"
+            />
+            <InputNumber id="quantity" name="quantity" placeholder="Quantity" />
           </div>
+          <Button className="justify-center" type="submit">
+            Save
+          </Button>
         </form>
       </div>
 
       <DataTable
-        className=" mt-10 mx-auto flex flex-col gap-4 md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20"
+        className="mt-10 mx-6 grid gap-4 sm:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20"
         value={products?.getAllProducts}
         size="small"
         selectionMode="single"
-        tableStyle={{ minWidth: "25rem" }}
       >
         <Column field="name" header="name" />
         <Column field="price" header="price" />
