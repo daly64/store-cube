@@ -1,19 +1,31 @@
 "use client";
 import ProductsTable from "@/components/ProductsTable";
 import { Button } from "primereact/button";
-import { Toast } from "primereact/toast";
-import { Dispatch, SetStateAction, createContext, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useRef,
+  useState,
+} from "react";
 import AddProductDialog from "@/components/AddProductDialog";
+import { DialogContext } from "@/tools/client/globalState";
 
-export const DialogContext = createContext<{visible:boolean|undefined,setVisible: Dispatch<SetStateAction<boolean | undefined>>}>(
-  {visible:false,setVisible:()=>{}}
-);
+//  a global context state
+
 export default function Home() {
   const [visible, setVisible] = useState<boolean>();
+
+  //  const DialogContext = createContext<{
+  //   visible: boolean | undefined;
+  //   setVisible: Dispatch<SetStateAction<boolean | undefined>>;
+  // }>({ visible: false, setVisible: () => {} });
+
   return (
     <main>
-      
-      <DialogContext.Provider value={{visible:visible,setVisible:setVisible}}>
+      <DialogContext.Provider
+        value={{ visible: visible, setVisible: setVisible }}
+      >
         <AddProductDialog />
       </DialogContext.Provider>
 

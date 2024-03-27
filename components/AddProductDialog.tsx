@@ -1,4 +1,4 @@
-import { DialogContext } from "@/app/page";
+import { DialogContext } from "@/tools/client/globalState";
 import { Product } from "@prisma/client";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
@@ -6,6 +6,8 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useContext, useRef, useState } from "react";
+
+
 
 const AddProductDialog = () => {
   const toast = useRef<Toast>(null);
