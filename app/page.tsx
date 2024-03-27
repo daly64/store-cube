@@ -1,40 +1,16 @@
 "use client";
+import AddProductButton from "@/components/AddProductButton";
 import ProductsTable from "@/components/ProductsTable";
-import { Button } from "primereact/button";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useRef,
-  useState,
-} from "react";
-import AddProductDialog from "@/components/AddProductDialog";
-import { DialogContext } from "@/tools/client/globalState";
-
-//  a global context state
-
 export default function Home() {
-  const [visible, setVisible] = useState<boolean>();
-
-  //  const DialogContext = createContext<{
-  //   visible: boolean | undefined;
-  //   setVisible: Dispatch<SetStateAction<boolean | undefined>>;
-  // }>({ visible: false, setVisible: () => {} });
-
   return (
     <main>
-      <DialogContext.Provider
-        value={{ visible: visible, setVisible: setVisible }}
-      >
-        <AddProductDialog />
-      </DialogContext.Provider>
-
-      <Button
-        label="Add new product"
-        icon="pi pi-plus"
-        onClick={() => setVisible(!visible)}
-      />
-      <ProductsTable />
+      <div className=" flex flex-row justify-end my-5 mx-5">
+      <AddProductButton />  
+      </div>
+      
+      <div className="bg-red-500  mx-5">
+        <ProductsTable />
+      </div>
     </main>
   );
 }

@@ -11,12 +11,7 @@ const ProductsTable = () => {
   if (productsError) return <p>Error : {productsError?.message}</p>;
 
   return (
-    <DataTable
-      className="mt-10 mx-10 grid gap-4 sm:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20"
-      value={products}
-      size="small"
-      selectionMode="single"
-    >
+    <DataTable value={products} size="small" selectionMode="single">
       <Column field="name" header="name" />
       <Column field="price" header="price" />
       <Column field="quantity" header="quantity" />
