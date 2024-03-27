@@ -5,10 +5,10 @@ export default function Home() {
   return (
     <main>
       <div className=" flex flex-row justify-end my-5 mx-5">
-      <AddProductButton />  
+        <AddProductButton />
       </div>
-      
-      <div className="bg-red-500  mx-5">
+
+      <div className=" mx-5">
         <ProductsTable />
       </div>
     </main>
