@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Store Cube",
   description: "storage management system",
+
 };
 
 export default function RootLayout({
@@ -34,7 +35,7 @@ export default function RootLayout({
       </head>
 
       <body className={inter.className}>
-      <ToolBar/>
+        <ToolBar />
         <Provider>{children}</Provider>
       </body>
     </html>
