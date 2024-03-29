@@ -1,3 +1,4 @@
+import Product from "../types/Product";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   createProduct,
@@ -21,20 +22,20 @@ export function useAllProducts() {
   };
 }
 
-export function useCreateProduct() {
+export function useCreateProduct(Product: Product) {
   const [createProductMutation, { loading, error }] = useMutation(
     createProduct,
     {
       refetchQueries: [getAllProducts],
     }
   );
-
-  const onCreateProduct = (input: any) => {
-    createProductMutation({ variables: { input } });
-  };
+  createProductMutation({ variables: { Product } });
+  // const onCreateProduct = (Product: Product) => {
+  //   createProductMutation({ variables: { Product } });
+  // };
 
   return {
-    onCreateProduct,
+    // onCreateProduct,
     loading,
     error,
   };

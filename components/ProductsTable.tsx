@@ -11,7 +11,8 @@ const ProductsTable = () => {
   if (productsError) return <p>Error : {productsError?.message}</p>;
 
   return (
-    <DataTable value={products} size="small" selectionMode="single">
+    <DataTable value={products}
+    size="small" selectionMode="single">
       <Column field="name" header="name" />
       <Column field="price" header="price" />
       <Column field="quantity" header="quantity" />

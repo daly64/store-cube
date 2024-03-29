@@ -14,6 +14,7 @@ const AddProductButton = () => {
       </DialogContext.Provider>
 
       <Button
+        raised
         label="Add new product"
         icon="pi pi-plus"
         onClick={() => setVisible(!visible)}
