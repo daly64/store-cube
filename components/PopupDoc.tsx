@@ -1,23 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import { Toast } from "primereact/toast";
 import useDeleteProduct from "@/tools/client/hooks/productHooks/useDeleteProduct";
 import Product from "@/tools/client/types/Product";
+import { editDialogContext } from "@/tools/client/globalState";
+import EditProductDialog from "./EditProductDialog";
 
 export default function PopupDoc(product: Product) {
   const menuLeft = useRef<Menu>(null);
   const toast = useRef<Toast>(null);
   const { deleteProduct } = useDeleteProduct();
-
+  const [visible, setVisible] = useState<boolean>();
   let items: MenuItem[] = [
     {
       label: "Edit",
       icon: "pi pi-pencil",
       className: "text-green-600",
-      command: () =>
+      command: () => {
         toast.current?.show({ severity: "info", detail: "Edit clicked!" }),
+          setVisible(!visible);
+      },
     },
     {
       label: "Delete",
@@ -34,6 +38,12 @@ export default function PopupDoc(product: Product) {
   ];
   return (
     <div className="card flex justify-content-center">
+      <editDialogContext.Provider
+        value={{ visible: visible, setVisible: setVisible }}
+      >
+        <EditProductDialog product={product} />
+      </editDialogContext.Provider>
+
       <Toast ref={toast} />
       <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
       <Button

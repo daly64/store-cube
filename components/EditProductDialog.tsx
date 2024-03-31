@@ -1,4 +1,4 @@
-import { DialogContext } from "@/tools/client/globalState";
+import { editDialogContext } from "@/tools/client/globalState";
 import useUpdateProduct from "@/tools/client/hooks/productHooks/useUpdateProduct";
 import Product from "@/tools/client/types/Product";
 import { Button } from "primereact/button";
@@ -6,9 +6,10 @@ import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { useContext, useRef } from "react";
 
-const EditProductDialog = (product: Product) => {
+const EditProductDialog = (props: { product: Product }) => {
+  const product = props.product;
   const toast = useRef<Toast>(null);
-  const { visible, setVisible } = useContext(DialogContext);
+  const { visible, setVisible } = useContext(editDialogContext);
   const { updateProduct } = useUpdateProduct();
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -51,6 +52,7 @@ const EditProductDialog = (product: Product) => {
               required
               autoFocus
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              defaultValue={product.name}
             />
 
             <label htmlFor="price" className="font-semibold">
@@ -62,6 +64,7 @@ const EditProductDialog = (product: Product) => {
               required
               type="number"
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              defaultValue={product.price}
             />
 
             <label htmlFor="quantity" className="font-semibold">
@@ -73,6 +76,7 @@ const EditProductDialog = (product: Product) => {
               required
               type="number"
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              defaultValue={product.quantity}
             />
 
             <Button type="submit" className="mt-4" label="save" />

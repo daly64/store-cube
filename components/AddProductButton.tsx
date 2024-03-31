@@ -1,4 +1,4 @@
-import { DialogContext } from "@/tools/client/globalState";
+import { addDialogContext } from "@/tools/client/globalState";
 import React, { useState } from "react";
 import AddProductDialog from "./AddProductDialog";
 import { Button } from "primereact/button";
@@ -7,11 +7,11 @@ const AddProductButton = () => {
   const [visible, setVisible] = useState<boolean>();
   return (
     <>
-      <DialogContext.Provider
+      <addDialogContext.Provider
         value={{ visible: visible, setVisible: setVisible }}
       >
         <AddProductDialog />
-      </DialogContext.Provider>
+      </addDialogContext.Provider>
 
       <Button
         raised

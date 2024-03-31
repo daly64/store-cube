@@ -1,4 +1,4 @@
-import { DialogContext } from "@/tools/client/globalState";
+import { addDialogContext } from "@/tools/client/globalState";
 import useCreateProduct from "@/tools/client/hooks/productHooks/useCreateProduct";
 import Product from "@/tools/client/types/Product";
 import { Button } from "primereact/button";
@@ -8,7 +8,7 @@ import { useContext, useRef } from "react";
 
 const AddProductDialog = () => {
   const toast = useRef<Toast>(null);
-  const { visible, setVisible } = useContext(DialogContext);
+  const { visible, setVisible } = useContext(addDialogContext);
   const { createProduct } = useCreateProduct();
   const onSubmit = (event: any) => {
     event.preventDefault();
