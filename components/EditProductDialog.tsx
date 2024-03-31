@@ -1,23 +1,23 @@
 import { DialogContext } from "@/tools/client/globalState";
-import useCreateProduct from "@/tools/client/hooks/productHooks/useCreateProduct";
+import useUpdateProduct from "@/tools/client/hooks/productHooks/useUpdateProduct";
 import Product from "@/tools/client/types/Product";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { useContext, useRef } from "react";
 
-const AddProductDialog = () => {
+const EditProductDialog = (product: Product) => {
   const toast = useRef<Toast>(null);
   const { visible, setVisible } = useContext(DialogContext);
-  const { createProduct } = useCreateProduct();
+  const { updateProduct } = useUpdateProduct();
   const onSubmit = (event: any) => {
     event.preventDefault();
-    const product: Product = {
+    const newProduct: Product = {
       name: event.target.name.value,
       price: Number(event.target.price.value),
       quantity: Number(event.target.quantity.value),
     };
-    createProduct({ variables: { input: product } });
+    updateProduct({ variables: { id: product.id, input: newProduct } });
     toast.current?.show({
       severity: "success",
       summary: "Product added",
@@ -30,7 +30,7 @@ const AddProductDialog = () => {
     <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
       <Toast ref={toast} />
       <Dialog
-        header="Add new product"
+        header="Edit new product"
         visible={visible}
         onHide={() => {
           setVisible(false);
@@ -62,7 +62,6 @@ const AddProductDialog = () => {
               required
               type="number"
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            
             />
 
             <label htmlFor="quantity" className="font-semibold">
@@ -84,4 +83,4 @@ const AddProductDialog = () => {
   );
 };
 
-export default AddProductDialog;
+export default EditProductDialog;

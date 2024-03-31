@@ -1,22 +1,27 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useAllProducts } from "@/tools/client/hooks/ProductHooks";
 import PopupDoc from "./PopupDoc";
+import useGetAllProducts from "@/tools/client/hooks/productHooks/useGetAllProducts";
+import { Row } from "primereact/row";
 
 const ProductsTable = () => {
-  const { productsLoading, productsError, products } = useAllProducts();
+  // const { productsLoading, productsError, products } = useAllProducts();
+  const { products, productsLoading, productsError } = useGetAllProducts();
 
   if (productsLoading) return <p>Loading...</p>;
 
   if (productsError) return <p>Error : {productsError?.message}</p>;
 
   return (
-    <DataTable value={products}
-    size="small" selectionMode="single">
+    <DataTable value={products} size="small" selectionMode="single">
       <Column field="name" header="name" />
       <Column field="price" header="price" />
       <Column field="quantity" header="quantity" />
-      <Column headerStyle={{ width: "5em" }} header="actions" body={PopupDoc} />
+      <Column
+        headerStyle={{ width: "5em" }}
+        header="actions"
+        body={(rowData) => PopupDoc(rowData)}
+      />
     </DataTable>
   );
 };

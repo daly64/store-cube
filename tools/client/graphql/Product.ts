@@ -28,11 +28,13 @@ const updateProduct = gql`
     }
   }
 `;
-
 const deleteProduct = gql`
   mutation DeleteProduct($id: ID!) {
     deleteProduct(id: $id)
   }
 `;
 
-export  { getAllProducts, createProduct, updateProduct, deleteProduct };
+const productQuery = { getAllProducts };
+const productMutations = { createProduct, updateProduct, deleteProduct };
+
+export { productQuery, productMutations };
