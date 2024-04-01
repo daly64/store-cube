@@ -1,11 +1,20 @@
 "use client";
-import AddProductButton from "@/components/AddProductButton";
+import Dialogs from "@/components/Dialogs";
 import ProductsTable from "@/components/ProductsTable";
+import useStore from "@/tools/client/zustand/store";
+import { Button } from "primereact/button";
 export default function Home() {
+  const { toggleAddProductDialog } = useStore();
+
   return (
     <main>
+      <Dialogs />
       <div className=" flex flex-row justify-end my-5 mx-5">
-        <AddProductButton />
+        <Button
+          label="Add new product"
+          icon="pi pi-plus"
+          onClick={toggleAddProductDialog}
+        />
       </div>
 
       <div className=" mx-5">

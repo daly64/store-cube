@@ -1,14 +1,11 @@
-import { addDialogContext } from "@/tools/client/globalState";
 import useCreateProduct from "@/tools/client/hooks/productHooks/useCreateProduct";
 import Product from "@/tools/client/types/Product";
+import useStore from "@/tools/client/zustand/store";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Toast } from "primereact/toast";
-import { useContext, useRef } from "react";
 
 const AddProductDialog = () => {
-  const toast = useRef<Toast>(null);
-  const { visible, setVisible } = useContext(addDialogContext);
+  const { toggleAddProductDialog, addProductDialogState } = useStore();
   const { createProduct } = useCreateProduct();
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -18,23 +15,16 @@ const AddProductDialog = () => {
       quantity: Number(event.target.quantity.value),
     };
     createProduct({ variables: { input: product } });
-    toast.current?.show({
-      severity: "success",
-      summary: "Product added",
-      detail: `Product ${product.name} was added successfully`,
-    });
-    setVisible(false);
+
+    toggleAddProductDialog();
   };
 
   return (
     <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
-      <Toast ref={toast} />
       <Dialog
         header="Add new product"
-        visible={visible}
-        onHide={() => {
-          setVisible(false);
-        }}
+        visible={addProductDialogState}
+        onHide={toggleAddProductDialog}
       >
         <form
           onSubmit={(e) => {
@@ -62,7 +52,6 @@ const AddProductDialog = () => {
               required
               type="number"
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            
             />
 
             <label htmlFor="quantity" className="font-semibold">

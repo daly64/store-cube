@@ -1,15 +1,17 @@
-import { editDialogContext } from "@/tools/client/globalState";
 import useUpdateProduct from "@/tools/client/hooks/productHooks/useUpdateProduct";
 import Product from "@/tools/client/types/Product";
+import useStore from "@/tools/client/zustand/store";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Toast } from "primereact/toast";
-import { useContext, useRef } from "react";
+import { InputText } from "primereact/inputtext";
+import { useState } from "react";
 
-const EditProductDialog = (props: { product: Product }) => {
-  const product = props.product;
-  const toast = useRef<Toast>(null);
-  const { visible, setVisible } = useContext(editDialogContext);
+const EditProductDialog = () => {
+  const { toggleEditProductDialog, editProductDialogState, selectedProduct } =
+    useStore();
+
+  const [product, setProduct] = useState<Product>(selectedProduct);
+
   const { updateProduct } = useUpdateProduct();
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -18,24 +20,17 @@ const EditProductDialog = (props: { product: Product }) => {
       price: Number(event.target.price.value),
       quantity: Number(event.target.quantity.value),
     };
-    updateProduct({ variables: { id: product.id, input: newProduct } });
-    toast.current?.show({
-      severity: "success",
-      summary: "Product added",
-      detail: `Product ${product.name} was added successfully`,
-    });
-    setVisible(false);
+    updateProduct({ variables: { id: selectedProduct.id, input: newProduct } });
+
+    toggleEditProductDialog();
   };
 
   return (
     <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
-      <Toast ref={toast} />
       <Dialog
-        header="Edit new product"
-        visible={visible}
-        onHide={() => {
-          setVisible(false);
-        }}
+        header="Edit product"
+        visible={editProductDialogState}
+        onHide={toggleEditProductDialog}
       >
         <form
           onSubmit={(e) => {
@@ -46,13 +41,13 @@ const EditProductDialog = (props: { product: Product }) => {
             <label htmlFor="name" className="font-semibold">
               Name
             </label>
-            <input
+            <InputText
               id="name"
               name="name"
               required
               autoFocus
-              className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              defaultValue={product.name}
+              value={selectedProduct.name}
+              onChange={(e) => setProduct({ ...product, name: e.target.value })}
             />
 
             <label htmlFor="price" className="font-semibold">
@@ -63,8 +58,10 @@ const EditProductDialog = (props: { product: Product }) => {
               name="price"
               required
               type="number"
-              className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              defaultValue={product.price}
+              defaultValue={selectedProduct.price}
+              inputMode="decimal"
+              className=" p-inputtext-lg p-inputtext-filled p-inputnumber-lg appearance-none border border-gray-300 rounded-md w-full bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:ring-opacity-50 focus:border-opacity-50 caret-none"
+              step={0.001}
             />
 
             <label htmlFor="quantity" className="font-semibold">
@@ -76,7 +73,7 @@ const EditProductDialog = (props: { product: Product }) => {
               required
               type="number"
               className="bg-white p-2 rounded-md shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              defaultValue={product.quantity}
+              defaultValue={selectedProduct.quantity}
             />
 
             <Button type="submit" className="mt-4" label="save" />

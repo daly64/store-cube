@@ -1,26 +1,25 @@
-import React, { useRef, useState } from "react";
+"use client";
+import useDeleteProduct from "@/tools/client/hooks/productHooks/useDeleteProduct";
+import Product from "@/tools/client/types/Product";
+import useStore from "@/tools/client/zustand/store";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
-import { Toast } from "primereact/toast";
-import useDeleteProduct from "@/tools/client/hooks/productHooks/useDeleteProduct";
-import Product from "@/tools/client/types/Product";
-import { editDialogContext } from "@/tools/client/globalState";
-import EditProductDialog from "./EditProductDialog";
+import { useRef } from "react";
 
 export default function PopupDoc(product: Product) {
   const menuLeft = useRef<Menu>(null);
-  const toast = useRef<Toast>(null);
   const { deleteProduct } = useDeleteProduct();
-  const [visible, setVisible] = useState<boolean>();
+  const { toggleEditProductDialog, setSelectedProduct } = useStore();
+
   let items: MenuItem[] = [
     {
       label: "Edit",
       icon: "pi pi-pencil",
       className: "text-green-600",
       command: () => {
-        toast.current?.show({ severity: "info", detail: "Edit clicked!" }),
-          setVisible(!visible);
+        setSelectedProduct(product);
+        toggleEditProductDialog();
       },
     },
     {
@@ -28,32 +27,22 @@ export default function PopupDoc(product: Product) {
       icon: "pi pi-trash",
       className: "text-red-600",
       command: () => {
-        toast.current?.show({
-          severity: "error",
-          detail: `${product.name} Deleted!`,
-        }),
-          deleteProduct({ variables: { id: product.id } });
+        deleteProduct({ variables: { id: product.id } });
       },
     },
   ];
   return (
-    <div className="card flex justify-content-center">
-      <editDialogContext.Provider
-        value={{ visible: visible, setVisible: setVisible }}
-      >
-        <EditProductDialog product={product} />
-      </editDialogContext.Provider>
-
-      <Toast ref={toast} />
+    <>
       <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
+
       <Button
         rounded
         text
-        icon="pi pi-ellipsis-v"
+        icon="pi pi-ellipsis-h"
         onClick={(event) => menuLeft.current?.toggle(event)}
         aria-controls="popup_menu_left"
         aria-haspopup
       />
-    </div>
+    </>
   );
 }
