@@ -22,7 +22,7 @@ const AddProductDialog = () => {
   return (
     <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
       <Dialog
-        header="Add new product"
+        header="Add New Product"
         visible={addProductDialogState}
         onHide={toggleAddProductDialog}
       >
