@@ -15,7 +15,7 @@ const ProductsTable = () => {
   return (
     <DataTable value={products} size="small" selectionMode="single">
       <Column field="name" header="name" />
-      <Column field="price" header="price" />
+      <Column field="price" header="price (TND)" />
       <Column field="quantity" header="quantity" />
       <Column
         headerStyle={{ width: "5em" }}
