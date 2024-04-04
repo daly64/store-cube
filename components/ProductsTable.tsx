@@ -1,8 +1,7 @@
+import useGetAllProducts from "@/tools/client/hooks/productHooks/useGetAllProducts";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import PopupDoc from "./PopupDoc";
-import useGetAllProducts from "@/tools/client/hooks/productHooks/useGetAllProducts";
-import { Row } from "primereact/row";
 
 const ProductsTable = () => {
   // const { productsLoading, productsError, products } = useAllProducts();
@@ -15,7 +14,11 @@ const ProductsTable = () => {
   return (
     <DataTable value={products} size="small" selectionMode="single">
       <Column field="name" header="name" />
-      <Column field="price" header="price (TND)" />
+      <Column
+        field="price"
+        body={(rowData) => rowData.price.toFixed(3)}
+        header="price (TND)"
+      />
       <Column field="quantity" header="quantity" />
       <Column
         headerStyle={{ width: "5em" }}

@@ -56,15 +56,13 @@ const AddProductDialog = () => {
               Price
             </label>
             <InputNumber
-              inputId="currency-india"
-              value={product.price}
+             value={product.price}
               onValueChange={(e) =>
                 setProduct({ ...product, price: Number(e.value) })
               }
-              mode="currency"
               currency="TND"
-              currencyDisplay="code"
-              locale="en-TN"
+              mode="currency"
+              locale="fr-FR"
             />
 
             <label htmlFor="quantity" className="font-semibold">
