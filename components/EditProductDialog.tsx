@@ -15,10 +15,8 @@ const EditProductDialog = () => {
 
   useEffect(() => {
     
-
-    return () => {
-      if (selectedProduct) setProduct(selectedProduct);
-    };
+ if (selectedProduct) setProduct(selectedProduct);
+    return () => {};
   }, [selectedProduct]);
 
   const { updateProduct } = useUpdateProduct();
