@@ -1,6 +1,6 @@
 import useUpdateProduct from "@/tools/client/hooks/productHooks/useUpdateProduct";
 import Product from "@/tools/client/types/Product";
-import useStore from "@/tools/client/zustand/store";
+import useProductStore from "@/tools/client/zustand/producctStore";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputNumber } from "primereact/inputnumber";
@@ -9,14 +9,12 @@ import { useEffect, useState } from "react";
 
 const EditProductDialog = () => {
   const { toggleEditProductDialog, editProductDialogState, selectedProduct } =
-    useStore();
+    useProductStore();
 
   const [product, setProduct] = useState<Product>(selectedProduct);
 
   useEffect(() => {
-    
- if (selectedProduct) setProduct(selectedProduct);
-    return () => {};
+  if (selectedProduct) setProduct(selectedProduct);
   }, [selectedProduct]);
 
   const { updateProduct } = useUpdateProduct();

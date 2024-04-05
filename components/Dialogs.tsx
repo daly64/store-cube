@@ -1,4 +1,4 @@
-import AddProductDialog from "./AddProductDialog";
+import AddProductDialog from "./AddProductDialog.";
 import EditProductDialog from "./EditProductDialog";
 
 const Dialogs = () => {

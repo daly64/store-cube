@@ -1,7 +1,7 @@
 "use client";
 import Dialogs from "@/components/Dialogs";
 import ProductsTable from "@/components/ProductsTable";
-import useStore from "@/tools/client/zustand/store";
+import useStore from "@/tools/client/zustand/producctStore";
 import { Button } from "primereact/button";
 export default function Home() {
   const { toggleAddProductDialog } = useStore();

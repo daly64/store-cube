@@ -1,7 +1,7 @@
 "use client";
 import useDeleteProduct from "@/tools/client/hooks/productHooks/useDeleteProduct";
 import Product from "@/tools/client/types/Product";
-import useStore from "@/tools/client/zustand/store";
+import useProductStore from "@/tools/client/zustand/producctStore";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
@@ -10,7 +10,7 @@ import { useRef } from "react";
 export default function PopupDoc(product: Product) {
   const menuLeft = useRef<Menu>(null);
   const { deleteProduct } = useDeleteProduct();
-  const { toggleEditProductDialog, setSelectedProduct } = useStore();
+  const { toggleEditProductDialog, setSelectedProduct } = useProductStore();
 
   let items: MenuItem[] = [
     {
