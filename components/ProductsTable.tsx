@@ -12,7 +12,14 @@ const ProductsTable = () => {
   if (productsError) return <p>Error : {productsError?.message}</p>;
 
   return (
-    <DataTable value={products} size="small" selectionMode="single">
+    <DataTable
+      value={products}
+      paginator
+      rows={5}
+      rowsPerPageOptions={[5, 10, 25, 50]}
+      size="small"
+      selectionMode="single"
+    >
       <Column field="name" header="name" />
       <Column
         field="price"
