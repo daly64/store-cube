@@ -1,37 +1,18 @@
-import useCreateProduct from "@/tools/client/hooks/productHooks/useCreateProduct";
-import Product from "@/tools/client/types/Product";
 import useProductStore from "@/tools/client/zustand/producctStore";
-import { defaultProduct } from "@/tools/client/zustand/productFeatures";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
 
  const AddProductDialog = () => {
    const {
      toggleAddProductDialog,
      addProductDialogState,
+     useSaveProduct,
+     newProduct: product,
+     setNewProduct: setProduct,
    } = useProductStore();
-   const { createProduct } = useCreateProduct();
-
-   const [product, setProduct] = useState<Product>({
-     name: "",
-     quantity: 0,
-     price: 0,
-   });
-
-   const onSubmit = (event: any) => {
-     event.preventDefault();
-         const createdProduct: Product = {
-           name: product.name,
-           price: product.price,
-           quantity: product.quantity,
-         };
-         createProduct({ variables: { input: createdProduct } });
-     setProduct(defaultProduct);
-         toggleAddProductDialog();
-   };
+   const { saveProduct } = useSaveProduct(product);
 
    return (
      <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
@@ -40,11 +21,7 @@ import { useState } from "react";
          visible={addProductDialogState}
          onHide={toggleAddProductDialog}
        >
-         <form
-           onSubmit={(e) => {
-             onSubmit(e);
-           }}
-         >
+         <form onSubmit={saveProduct}>
            <div className="flex flex-col gap-2">
              <label htmlFor="name" className="font-semibold">
                Name

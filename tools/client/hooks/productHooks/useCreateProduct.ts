@@ -3,7 +3,7 @@ import { productMutations, productQuery } from "../../graphql/Product";
 
 const useCreateProduct = () => {
   const { getAllProducts } = productQuery;
-  const { createProduct, updateProduct, deleteProduct } = productMutations;
+  const { createProduct } = productMutations;
 
   const [
     createProductMutation,
