@@ -2,10 +2,15 @@
 import Dialogs from "@/components/Dialogs";
 import ProductsTable from "@/components/ProductsTable";
 import useStore from "@/tools/client/zustand/producctStore";
+import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
+import { useEffect } from "react";
 export default function Home() {
   const { toggleAddProductDialog } = useStore();
-
+const router = useRouter();
+useEffect(()=>{
+  router.push("/Dashboard");
+})
   return (
     <main>
       <Dialogs />
@@ -17,9 +22,10 @@ export default function Home() {
         />
       </div>
 
-      <div className=" mx-5">
+      <div className=" m-auto w-3/4">
         <ProductsTable />
       </div>
+      
     </main>
   );
 }

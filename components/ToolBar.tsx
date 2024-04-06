@@ -1,21 +1,11 @@
+'use client';
+import { useRouter } from "next/navigation";
 import { Menubar } from "primereact/menubar";
-import { Toolbar } from "primereact/toolbar";
 ;
 
 const ToolBar = () => {
+  const router = useRouter();
   return (
-    // <Toolbar
-    //   className=" flex justify-between items-center bg-white border-b border-gray-300"
-    //   style={{ gap: "1rem" }}
-    //   start={
-    //     <div className="flex items-center">
-    //       <img src="/logo.svg" className="h-8 mr-2" alt="logo" />
-    //       <h2 className="text-xl font-semibold">Store Cube</h2>
-
-    //     </div>
-    //   }
-    // />
-
     <Menubar
       start={
         <div className="flex items-center">
@@ -25,10 +15,26 @@ const ToolBar = () => {
       }
       style={{ gap: "1rem" }}
       model={[
-        { label: "Dashboard", icon: "pi pi-fw pi-desktop" },
-        { label: "List", icon: "pi pi-fw pi-list" },
-        { label: "Inputs", icon: "pi pi-fw pi-sign-in" },
-        { label: "Outputs", icon: "pi pi-fw pi-sign-out" },
+        {
+          label: "Dashboard",
+          icon: "pi pi-fw pi-desktop",
+          command: () => router.push("/Dashboard"),
+        },
+        {
+          label: "Store",
+          icon: "pi pi-fw pi-box",
+          command: () => router.push("/Store"),
+        },
+        {
+          label: "Inputs",
+          icon: "pi pi-fw pi-sign-in",
+          command: () => router.push("/Inputs"),
+        },
+        {
+          label: "Outputs",
+          icon: "pi pi-fw pi-sign-out",
+          command: () => router.push("/Outputs"),
+        },
       ]}
     />
   );
