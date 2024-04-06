@@ -1,5 +1,5 @@
 "use client";
-import useDeleteProduct from "@/tools/client/hooks/productHooks/useDeleteProduct";
+import useDeleteProduct from "@/tools/client/hooks/productHooks/graphqlHooks/useDeleteProduct";
 import Product from "@/tools/client/types/Product";
 import useProductStore from "@/tools/client/zustand/producctStore";
 import { Button } from "primereact/button";
@@ -9,9 +9,10 @@ import { useRef } from "react";
 
 export default function PopupDoc(product: Product) {
   const menuLeft = useRef<Menu>(null);
-  const { deleteProduct } = useDeleteProduct();
-  const { toggleEditProductDialog, setSelectedProduct } = useProductStore();
-
+  // const { deleteProduct } = useDeleteProduct();
+  const { toggleEditProductDialog, setSelectedProduct, useDropProduct } =
+    useProductStore();
+const { dropProduct } = useDropProduct();
   let items: MenuItem[] = [
     {
       label: "Edit",
@@ -27,7 +28,8 @@ export default function PopupDoc(product: Product) {
       icon: "pi pi-trash",
       className: "text-red-600",
       command: () => {
-        deleteProduct({ variables: { id: product.id } });
+        setSelectedProduct(product);
+        dropProduct();
       },
     },
   ];

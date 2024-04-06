@@ -12,8 +12,17 @@ import { InputText } from "primereact/inputtext";
      newProduct: product,
      setNewProduct: setProduct,
    } = useProductStore();
-   const { saveProduct } = useSaveProduct(product);
+   const { saveProduct } = useSaveProduct();
 
+   const setName=(e:any)=>{
+    setProduct({...product, name:e.target.value})
+   }
+const setPrice=(e:any)=>{
+  setProduct({ ...product, price: Number(e.value) });
+}
+const setQuantity=(e:any)=>{
+  setProduct({ ...product, quantity: Number(e.value) });
+}
    return (
      <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
        <Dialog
@@ -30,9 +39,7 @@ import { InputText } from "primereact/inputtext";
                required
                autoFocus
                value={product.name}
-               onChange={(e) =>
-                 setProduct({ ...product, name: e.target.value })
-               }
+               onChange={(e) => setName(e)}
              />
 
              <label htmlFor="price" className="font-semibold">
@@ -40,9 +47,7 @@ import { InputText } from "primereact/inputtext";
              </label>
              <InputNumber
                value={product.price}
-               onValueChange={(e) =>
-                 setProduct({ ...product, price: Number(e.value) })
-               }
+               onValueChange={(e) => setPrice(e)}
                currency="TND"
                mode="currency"
                locale="fr-FR"
@@ -53,9 +58,7 @@ import { InputText } from "primereact/inputtext";
              </label>
              <InputNumber
                value={product.quantity}
-               onValueChange={(e) =>
-                 setProduct({ ...product, quantity: Number(e.value) })
-               }
+               onValueChange={(e) => setQuantity(e)}
                mode="decimal"
                showButtons
                min={0}

@@ -1,4 +1,4 @@
-import useUpdateProduct from "@/tools/client/hooks/productHooks/useUpdateProduct";
+import useUpdateProduct from "@/tools/client/hooks/productHooks/graphqlHooks/useUpdateProduct";
 import Product from "@/tools/client/types/Product";
 import useProductStore from "@/tools/client/zustand/producctStore";
 import { Button } from "primereact/button";
@@ -8,27 +8,24 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 
 const EditProductDialog = () => {
-  const { toggleEditProductDialog, editProductDialogState, selectedProduct } =
-    useProductStore();
+  const {
+    toggleEditProductDialog,
+    editProductDialogState,
+    selectedProduct: product,
+    setSelectedProduct: setProduct,
+    useEditeProduct,
+  } = useProductStore();
 
-  const [product, setProduct] = useState<Product>(selectedProduct);
-
-  useEffect(() => {
-  if (selectedProduct) setProduct(selectedProduct);
-  }, [selectedProduct]);
-
-  const { updateProduct } = useUpdateProduct();
-  const onSubmit = (event: any) => {
-    event.preventDefault();
-    const newProduct: Product = {
-      name: product.name,
-      price: product.price,
-      quantity: product.quantity,
-    };
-    updateProduct({ variables: { id: selectedProduct.id, input: newProduct } });
-
-    toggleEditProductDialog();
-  };
+const { editProduct } = useEditeProduct();
+   const setName = (e: any) => {
+     setProduct({ ...product, name: e.target.value });
+   };
+   const setPrice = (e: any) => {
+     setProduct({ ...product, price: Number(e.value) });
+   };
+   const setQuantity = (e: any) => {
+     setProduct({ ...product, quantity: Number(e.value) });
+   };
 
   return (
     <div className="sm:w-60p md:w-60p lg:w-60p xl:w-60p mx-auto">
@@ -37,11 +34,7 @@ const EditProductDialog = () => {
         visible={editProductDialogState}
         onHide={toggleEditProductDialog}
       >
-        <form
-          onSubmit={(e) => {
-            onSubmit(e);
-          }}
-        >
+        <form onSubmit={editProduct}>
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="font-semibold">
               Name
@@ -50,7 +43,7 @@ const EditProductDialog = () => {
               required
               autoFocus
               value={product.name}
-              onChange={(e) => setProduct({ ...product, name: e.target.value })}
+              onChange={(e) => setName(e)}
             />
 
             <label htmlFor="price" className="font-semibold">
@@ -59,9 +52,7 @@ const EditProductDialog = () => {
             <InputNumber
               inputId="currency-india"
               value={product.price}
-              onValueChange={(e) =>
-                setProduct({ ...product, price: Number(e.value) })
-              }
+              onValueChange={(e) => setPrice(e)}
               mode="currency"
               currency="TND"
               currencyDisplay="code"
@@ -73,13 +64,10 @@ const EditProductDialog = () => {
             </label>
             <InputNumber
               value={product.quantity}
-              onValueChange={(e) =>
-                setProduct({ ...product, quantity: Number(e.value) })
-              }
+              onValueChange={(e) => setQuantity(e)}
               mode="decimal"
               showButtons
               min={1}
-              max={100}
             />
 
             <Button type="submit" className="mt-4" label="save" />

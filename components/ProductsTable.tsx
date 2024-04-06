@@ -1,4 +1,4 @@
-import useGetAllProducts from "@/tools/client/hooks/productHooks/useGetAllProducts";
+import useGetAllProducts from "@/tools/client/hooks/productHooks/graphqlHooks/useGetAllProducts";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import PopupDoc from "./PopupDoc";

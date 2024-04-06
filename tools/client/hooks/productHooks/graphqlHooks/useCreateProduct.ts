@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { productMutations, productQuery } from "../../graphql/Product";
+import { productMutations, productQuery } from "../../../graphql/Product";
 
 const useCreateProduct = () => {
   const { getAllProducts } = productQuery;

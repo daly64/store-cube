@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { productQuery } from "../../graphql/Product";
+import { productQuery } from "../../../graphql/Product";
 
 const useGetAllProducts = () => {
   const { getAllProducts } = productQuery;

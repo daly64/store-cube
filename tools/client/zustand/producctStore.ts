@@ -1,49 +1,29 @@
 import { create } from "zustand";
 import Product from "../types/Product";
-import useCreateProduct from "../hooks/productHooks/useCreateProduct";
+import useSaveProduct from "../hooks/productHooks/uiHooks/useSaveProduct";
+import productStore from "../types/productStore";
+import { toggleAddProductDialog, toggleEditProductDialog, setSelectedProduct, setNewProduct, setModifiedProduct } from "./productsStatesModifiers";
+import useEditProduct from "../hooks/productHooks/uiHooks/useEditProduct";
+import useDropProduct from "../hooks/productHooks/uiHooks/useDropProduct";
+
 
 
  export const defaultProduct = { name: "", price: 0, quantity: 0 };
-type productStore = {
-  addProductDialogState: boolean;
-  editProductDialogState: boolean;
-  selectedProduct: Product;
-  newProduct: Product;
-  toggleAddProductDialog: () => void;
-  toggleEditProductDialog: () => void;
-  setSelectedProduct: (product: Product) => void;
-  setNewProduct: (product: Product) => void;
-  useSaveProduct: (product: Product) => { saveProduct: () => void };
-};
 
-const useProductStore = create<productStore>((set,get) => ({
+
+const useProductStore = create<productStore>((set, get) => ({
   addProductDialogState: false,
   editProductDialogState: false,
   selectedProduct: defaultProduct,
   newProduct: defaultProduct,
-  toggleAddProductDialog: () => set((state) => ({ addProductDialogState: !state.addProductDialogState })),
-  toggleEditProductDialog: () => set((state) => ({ editProductDialogState: !state.editProductDialogState })),
-  setSelectedProduct: (product: Product) => set(({ selectedProduct: { ...product } })),
-  setNewProduct: (product: Product) => set(({ newProduct: { ...product } })),
-  useSaveProduct: () => {
-       const { createProduct } = useCreateProduct();
-       function saveProduct() {
-        // prevent default
-        const event = window.event || arguments[0];
-        event.preventDefault();
-        // save product
-         createProduct({ variables: { input: get().newProduct } });
-        // close add dialog 
-        set((state) => ({
-          addProductDialogState: !state.addProductDialogState,
-        }));
-        // clear new product
-        set((state) => ({
-          newProduct: defaultProduct,
-        }));
-       }
-      return { saveProduct }; 
-  },
- }));
+  toggleAddProductDialog: () => toggleAddProductDialog(set),
+  toggleEditProductDialog: () => toggleEditProductDialog(set),
+  setSelectedProduct: (product: Product) => setSelectedProduct(set, product),
+  setNewProduct: (product: Product) => setNewProduct(set, product),
+  setModifiedProduct: (product: Product) => setModifiedProduct(set, product),
+  useSaveProduct: () => useSaveProduct(set, get),
+  useEditeProduct: () => useEditProduct(set, get),
+  useDropProduct: () => useDropProduct(set, get),
+}));
 
 export default useProductStore;
